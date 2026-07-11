@@ -5,12 +5,13 @@ import type { WalnutContext, WalnutWebContext } from './walnut';
  * description: Click on element using selector ${selector}
  * actionType: custom_click_element
  * context: web
- * needsLocator: true
+ * needsLocator: false
  * category: Element Interaction
  */
 export async function clickElement(ctx: WalnutContext) {
-  // needsLocator: true — runtime injects ctx.locator with the resolved ${selector} value
-  const webCtx = ctx as WalnutWebContext & { locator: string };
-  await webCtx.click(webCtx.locator);
-  ctx.log(`Clicked element: ${webCtx.locator}`);
+  // ctx.args[0] = selector value (from ${selector})
+  const webCtx = ctx as WalnutWebContext;
+  const selector = ctx.args[0];
+  await webCtx.click(selector);
+  ctx.log(`Clicked element: ${selector}`);
 }

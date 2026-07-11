@@ -5,12 +5,13 @@ import type { WalnutContext, WalnutWebContext } from './walnut';
  * description: Scroll to element using selector ${selector}
  * actionType: custom_scroll_to_element
  * context: web
- * needsLocator: true
+ * needsLocator: false
  * category: Element Interaction
  */
 export async function scrollToElement(ctx: WalnutContext) {
-  // needsLocator: true — runtime injects ctx.locator with the resolved ${selector} value
-  const webCtx = ctx as WalnutWebContext & { locator: string };
-  await webCtx.scroll({ selector: webCtx.locator });
-  ctx.log(`Scrolled to element: ${webCtx.locator}`);
+  // ctx.args[0] = selector value (from ${selector})
+  const webCtx = ctx as WalnutWebContext;
+  const selector = ctx.args[0];
+  await webCtx.scroll({ selector });
+  ctx.log(`Scrolled to element: ${selector}`);
 }
