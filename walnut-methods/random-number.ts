@@ -1,7 +1,7 @@
 import type { WalnutContext } from './walnut';
 
 /** @walnut_method
- * name: Generate Random Number
+ * name: custom Generate Random Number
  * description: Generate a random numeric string of length ${length} and store in $[result]
  * actionType: custom_random_number
  * context: shared

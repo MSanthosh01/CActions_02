@@ -1,7 +1,7 @@
 import type { WalnutContext, WalnutWebContext } from './walnut';
 
 /** @walnut_method
- * name: Clear Text
+ * name: custom Clear Text
  * description: Clear the text content of ${element}
  * actionType: custom_clear_text
  * context: web

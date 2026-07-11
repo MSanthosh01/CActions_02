@@ -1,7 +1,7 @@
 import type { WalnutContext, WalnutWebContext } from './walnut';
 
 /** @walnut_method
- * name: Scroll to Element
+ * name: custom Scroll to Element
  * description: Scroll to element using selector ${selector}
  * actionType: custom_scroll_to_element
  * context: web

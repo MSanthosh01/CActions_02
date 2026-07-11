@@ -1,7 +1,7 @@
 import type { WalnutContext } from './walnut';
 
 /** @walnut_method
- * name: Generate Random Alphabetic
+ * name: custom Generate Random Alphabetic
  * description: Generate a random alphabetic string of length ${length} and store in $[result]
  * actionType: custom_random_alpha
  * context: shared

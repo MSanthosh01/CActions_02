@@ -1,7 +1,7 @@
 import type { WalnutContext, WalnutWebContext } from './walnut';
 
 /** @walnut_method
- * name: Click Element
+ * name: custom Click Element
  * description: Click on element using selector ${selector}
  * actionType: custom_click_element
  * context: web

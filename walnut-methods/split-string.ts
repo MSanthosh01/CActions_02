@@ -1,7 +1,7 @@
 import type { WalnutContext } from './walnut';
 
 /** @walnut_method
- * name: Split String by Delimiter
+ * name: custom Split String by Delimiter
  * description: Split $[inputString] by delimiter ${delimiter} and store value at index ${index} in $[result]
  * actionType: custom_split_string
  * context: shared
