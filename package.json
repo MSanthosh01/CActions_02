@@ -2,5 +2,8 @@
   "dependencies": {
     "@playwright/mcp": "^0.0.78",
     "exceljs": "^4.4.0"
+  },
+  "scripts": {
+    "postinstall": "npm install --prefix walnut-methods"
   }
 }
