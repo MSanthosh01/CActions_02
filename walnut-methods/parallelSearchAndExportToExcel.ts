@@ -21,7 +21,7 @@ export async function parallelSearchAndExportToExcel(ctx: WalnutWebContext) {
   const idColumnName    = ctx.args[2];
   const fromDate        = ctx.args[3];
   const toDate          = ctx.args[4];
-  const outputSheetName = ctx.args[5];
+  const outputSheetName = (ctx.args[5] ?? '').trim() || `Output_${new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')}`;
 
   // ── LOCATORS — identical to searchAndExportToExcel ──────────────────────────
   const LOCATORS = {
