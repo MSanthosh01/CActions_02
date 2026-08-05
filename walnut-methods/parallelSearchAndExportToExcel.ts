@@ -6,6 +6,7 @@ import * as os from 'os';
 import * as path from 'path';
 
 
+
 /** @walnut_method
  * name: Parallel Search IDs from Excel and Write Results (2 Workers × 2 Tabs)
  * description: Open workbook ${filePath} sheet ${inputSheetName} column ${idColumnName} search each ID in parallel using 2 browser workers with 2 tabs each from date ${fromDate} to date ${toDate} and write results into sheet ${outputSheetName}
@@ -396,9 +397,8 @@ async function processChunk(page, chunk, tabLabel) {
   //           it to a temp file so both worker browsers can restore it without
   //           performing any login themselves.
   // ═══════════════════════════════════════════════════════════════════════════
-  // Resolve playwright absolute path in main thread (worker eval has no module resolution context)
-  const playwrightPath: string = require.resolve('playwright');
-  ctx.log(`Playwright resolved at: ${playwrightPath}`);
+  // Playwright is bundled inside the Walnut Agent at a fixed known path
+  const playwrightPath = '/Applications/Walnut Agent.app/Contents/Resources/node_modules/playwright/index.js';
   ctx.log('Capturing session storage state from active browser...');
   const storageState = await ctx.page.context().storageState();
   const authStorageState = path.join(os.tmpdir(), `walnut_auth_${Date.now()}.json`);
