@@ -404,7 +404,9 @@ async function processChunk(page, chunk, tabLabel) {
   const authStorageState = path.join(os.tmpdir(), `walnut_auth_${Date.now()}.json`);
   fs.writeFileSync(authStorageState, JSON.stringify(storageState), 'utf-8');
   ctx.log(`Session state saved to: ${authStorageState}`);
-  const baseUrl: string = ctx.testBaseUrl;
+  // ctx.testBaseUrl is empty in this runtime — read the URL from the live page instead
+  const rawUrl = ctx.page.url() as string;
+  const baseUrl: string = rawUrl && rawUrl !== 'about:blank' ? rawUrl : ctx.testBaseUrl;
 
   // ═══════════════════════════════════════════════════════════════════════════
   // STEP 5 — Launch 2 workers, each receives 2 chunks
