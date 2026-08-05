@@ -4,6 +4,7 @@ import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
+import { createRequire } from 'module';
 
 /** @walnut_method
  * name: Parallel Search IDs from Excel and Write Results (2 Workers × 2 Tabs)
@@ -185,7 +186,7 @@ export async function parallelSearchAndExportToExcel(ctx: WalnutWebContext) {
 
   const workerScript = /* javascript */ `
 const { workerData, parentPort } = require('worker_threads');
-const { chromium } = require('playwright');
+const { chromium } = require(workerData.playwrightPath);
 
 const {
   workerId,
@@ -395,6 +396,10 @@ async function processChunk(page, chunk, tabLabel) {
   //           it to a temp file so both worker browsers can restore it without
   //           performing any login themselves.
   // ═══════════════════════════════════════════════════════════════════════════
+  // Resolve playwright absolute path in main thread (worker eval has no module resolution context)
+  const _require = createRequire(import.meta.url ?? __filename);
+  const playwrightPath: string = _require.resolve('playwright');
+  ctx.log(`Playwright resolved at: ${playwrightPath}`);
   ctx.log('Capturing session storage state from active browser...');
   const storageState = await ctx.page.context().storageState();
   const authStorageState = path.join(os.tmpdir(), `walnut_auth_${Date.now()}.json`);
@@ -420,6 +425,7 @@ async function processChunk(page, chunk, tabLabel) {
           workerId,
           baseUrl,
           authStorageState,
+          playwrightPath,
           chunk1,
           chunk2,
           fromDate,
