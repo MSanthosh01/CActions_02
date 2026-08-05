@@ -4,7 +4,7 @@ import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
-import { createRequire } from 'module';
+
 
 /** @walnut_method
  * name: Parallel Search IDs from Excel and Write Results (2 Workers × 2 Tabs)
@@ -397,8 +397,7 @@ async function processChunk(page, chunk, tabLabel) {
   //           performing any login themselves.
   // ═══════════════════════════════════════════════════════════════════════════
   // Resolve playwright absolute path in main thread (worker eval has no module resolution context)
-  const _require = createRequire(import.meta.url ?? __filename);
-  const playwrightPath: string = _require.resolve('playwright');
+  const playwrightPath: string = require.resolve('playwright');
   ctx.log(`Playwright resolved at: ${playwrightPath}`);
   ctx.log('Capturing session storage state from active browser...');
   const storageState = await ctx.page.context().storageState();
