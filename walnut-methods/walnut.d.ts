@@ -51,6 +51,8 @@ export interface WalnutBaseContext {
   setVariable(name: string, value: any): void;
   /** Retrieve a value from the shared variable context */
   getVariable(name: string): any;
+  /** Resolve an uploaded artifact reference (e.g. "ART-1") to a local file path */
+  resolveArtifact(ref: string): Promise<string>;
 }
 
 /** Browser automation via Playwright (platform: 'web') */
