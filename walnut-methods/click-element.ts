@@ -9,7 +9,7 @@ import type { WalnutWebContext } from './walnut';
  * category: Element Interaction
  */
 export async function customClick(ctx: WalnutWebContext) {
-  // The linked step object is injected as ctx.locator when needsLocator is true.
-  const webCtx = ctx as WalnutWebContext & { locator: string };
-  await webCtx.click(webCtx.locator);
+  // The linked step object is injected as a Playwright Locator.
+  const webCtx = ctx as WalnutWebContext & { locator: { click(): Promise<void> } };
+  await webCtx.locator.click();
 }
