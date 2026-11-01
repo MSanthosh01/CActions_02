@@ -92,13 +92,17 @@ export async function readEmployeesToExcel(ctx: WalnutWebContext): Promise<void>
       throw new Error(`Pagination ended after ${records.length} of ${expectedCount} employee records.`);
     }
 
+    const selectedPage = page.locator('.oxd-pagination-page-item--page-selected');
+    const previousPageText = (await selectedPage.innerText()).trim();
     await nextButton.click();
     await page.waitForFunction(
-      (previousSignature: string) => {
+      ({ pageText, rowSignature }: { pageText: string; rowSignature: string }) => {
+        const currentPage = document.querySelector('.oxd-pagination-page-item--page-selected');
         const firstRow = document.querySelector('.oxd-table-body .oxd-table-row');
-        return (firstRow?.textContent ?? '').trim() !== previousSignature;
+        return (currentPage?.textContent ?? '').trim() !== pageText &&
+          (firstRow?.innerText ?? '').trim() !== rowSignature;
       },
-      firstRowSignature,
+      { pageText: previousPageText, rowSignature: firstRowSignature },
       { timeout: 30000 },
     );
     pageNumber += 1;
